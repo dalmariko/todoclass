@@ -1,0 +1,160 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+}
+
+.container {
+    min-width: 320px;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto
+}
+
+.noActive {
+    display: none;
+}
+
+.exitBtn {
+    position: absolute;
+    cursor: pointer;
+    top: 10px;
+    right: 10px
+}
+
+.exitBtn svg {
+    position: relative;
+    width: 20px;
+    height: 20px;
+    fill: #3e3e3e
+}
+
+.exitBtn svg > circle {
+    stroke: #3e3e3e
+}
+
+.exitBtn svg > circle:hover {
+    fill: #ff2238
+}
+
+.exitBtn svg > path {
+    stroke-width: 3px;
+    stroke: #fff;
+    stop-opacity: .2
+}
+
+.overlay {
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.77);
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transition: .3s all;
+    z-index: 20;
+}
+
+header {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    background-color: aqua;
+}
+
+.addModal {
+    position: relative;
+    z-index: 100;
+}
+
+.addTascks {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, 50%);
+    width: 50%;
+    border: solid 1px black;
+    padding: 20px;
+    background-color: #ffffff;
+}
+
+.dataForm {
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.form-group {
+    display: flex;
+    padding: 10px 0;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.form-group label {
+    padding: 5px 0;
+}
+
+.form-group button {
+    width: 30%;
+}
+
+.up {
+    width: 5px;
+    height: 5px;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-bottom: 10px solid red;
+}
+
+.down {
+    width: 5px;
+    height: 5px;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 10px solid red;
+}
+
+.name, .date {
+    width: 10%;
+}
+
+.descr, .options {
+    width: 35%;
+}
+
+.headerToDo,
+.name,
+.date,
+.descr,
+.options,
+.dataInfo {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    word-break: break-all;
+}
+
+.dataInfo {
+    margin: 3px 0;
+    border-top: solid 1px black;
+    border-bottom: solid 1px black;
+}
+
+
+.pending{
+background-color: #ff2238;
+}
+.inWork{
+background-color: green;
+}
+.complite{
+background-color: orange;
+}
+.refactor{
+background-color: aqua;
+}
