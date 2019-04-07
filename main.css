@@ -102,6 +102,13 @@ header {
     width: 30%;
 }
 
+.buttons{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
 .up {
     width: 5px;
     height: 5px;
@@ -158,3 +165,5 @@ background-color: orange;
 .refactor{
 background-color: aqua;
 }
+
+

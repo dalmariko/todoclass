@@ -8,22 +8,26 @@ class TodoList {
 
     init() {
 
-        this._todoContainer=document.querySelector(this._settings.todoContainer);
+        this._todoContainer = document.querySelector(this._settings.todoContainer);
 
-        this._openForm=document.querySelector(this._settings.openForm);
+        this._openForm = document.querySelector(this._settings.openForm);
 
         this._form = document.forms[this._settings.formName];
         this._name = this._form[this._settings.formInfoName];
         this._date = this._form[this._settings.formDate];
         this._descriptions = this._form[this._settings.formDescriptions];
 
-        this._headerToDo=document.querySelector(this._settings.headerTodo);
+        this._addItemBtn=document.querySelector('.addItemBtn');
+        this._rewriteItemBtn=document.querySelector('.rewriteItemBtn');
+        this._btns=document.querySelector('.buttons');
 
-        this._overlay=document.querySelector('.overlay');
-        this._modal=document.querySelector('.addModal');
+        this._headerToDo = document.querySelector(this._settings.headerTodo);
+
+        this._overlay = document.querySelector('.overlay');
+        this._modal = document.querySelector('.addModal');
         this._exitBtn = document.querySelector('.exitBtn');
 
-        this._dataTascksInfo=document.querySelector('.dataTascksInfo');
+        this._dataTascksInfo = document.querySelector('.dataTascksInfo');
 
         this._setEvents();
 
@@ -31,71 +35,77 @@ class TodoList {
     }
 
 
-
-    editingTodoItem() {
-
-    }
-
-    defaultToDoLocalStorage(e){
-        let todos=localStorage.getItem('todoList') ? TodoList.getLogalStorage():TodoList.toLocalStorage([]);
+    defaultToDoLocalStorage(e) {
+        let todos = localStorage.getItem('todoList') ? TodoList.getLogalStorage() : TodoList.toLocalStorage([]);
         this.generate(todos);
     }
 
     newTodo(e) {
-
         e.preventDefault();
-        let temp =  !localStorage.getItem('todoList') ? TodoList.toLocalStorage([]) : TodoList.getLogalStorage();
+
+
+        let temp = !localStorage.getItem('todoList') ? TodoList.toLocalStorage([]) : TodoList.getLogalStorage();
 
         let todo = {
             id: temp.length,
             name: this._name.value,
             date: this._date.value,
             descriptions: this._descriptions.value,
-            status:'pending',
+            status: 'pending',
             rewrite: false,
         };
         this._form.reset();
 
-        this._overlay.classList.add('noActive');
-        this._modal.classList.add('noActive');
+        this.closeModal();
 
         temp.push(todo);
 
         TodoList.toLocalStorage(temp);
-        temp.length!==0?this.generate(temp):'';
+        temp.length !== 0 ? this.generate(temp) : '';
 
     }
 
-    sortTodo(e){
+    sortTodo(e) {
         e.preventDefault();
 
         let todos = TodoList.getLogalStorage();
 
-            if (e.target.classList.contains('up')) {
-                let param = e.target.closest('.name')?'name':'date';
-                TodoList.sorteg(todos,param,{asc:false});
-            }
+        if (e.target.classList.contains('up')) {
+            let param = e.target.closest('.name') ? 'name' : 'date';
+            TodoList.sorteg(todos, param, {asc: false});
+        }
 
-           if (e.target.classList.contains('down')) {
-                let param = e.target.closest('.name')?'name':'date';
-                TodoList.sorteg(todos,param);
-            }
-    }
-
-    openModal(e){
-        e.preventDefault();
-        if(e.target.classList.contains('openModal')){
-            this._overlay.classList.remove('noActive');
-            this._modal.classList.remove('noActive');
+        if (e.target.classList.contains('down')) {
+            let param = e.target.closest('.name') ? 'name' : 'date';
+            TodoList.sorteg(todos, param);
         }
     }
 
-    closeModal(e){
+    eventOpenModal(e) {
         e.preventDefault();
-        if (e.keyCode == 27 || e.target.closest('.exitBtn')){
-            this._overlay.classList.add('noActive');
-            this._modal.classList.add('noActive');
+
+        if (e.target.classList.contains('openModal')) {
+            this._addItemBtn.disabled=false;
+            this._rewriteItemBtn.disabled=true;
+            this.openModal();
         }
+    }
+
+    eventCloseModal(e) {
+        e.preventDefault();
+        if (e.keyCode == 27 || e.target.closest('.exitBtn')) {
+            this.closeModal();
+        }
+    }
+
+    openModal(){
+        this._overlay.classList.remove('noActive');
+        this._modal.classList.remove('noActive');
+    }
+
+    closeModal(){
+        this._overlay.classList.add('noActive');
+        this._modal.classList.add('noActive');
     }
 
     status(e) {
@@ -118,68 +128,127 @@ class TodoList {
                 break;
         }
 
-        let tasck = e.target.closest('.dataInfo');
-        let id = tasck.dataset.id;
+        let task = e.target.closest('.dataInfo');
+        let id = task.dataset.id*1;
 
-        this.contorlStatus(id,status)
+        this.contorlStatus(id, status)
 
     }
 
-    changeStatus(id,status){
+    changeStatus(id, status) {
         !localStorage.getItem('todoList') ? TodoList.toLocalStorage([]) : '';
         let temp = TodoList.getLogalStorage();
 
-     for(let todo=0;todo<temp.length;todo++){
-         if(temp[todo].id == id){
-             temp[todo].status=status;
-             break;
-         }
-     }
-     TodoList.toLocalStorage(temp);
+        for (let todo = 0; todo < temp.length; todo++) {
+            if (temp[todo].id*1 === id) {
+                temp[todo].status = status;
+                break;
+            }
+        }
+        TodoList.toLocalStorage(temp);
 
-     }
+    }
 
-    contorlStatus(id,status){
+    contorlStatus(id, status) {
         switch (status) {
             case 'pending':
                 document.querySelector(`[data-id="${id}"]`).className = '';
                 document.querySelector(`[data-id="${id}"]`).classList.add('dataInfo', 'pending');
-                this.changeStatus(id,status);
+                this.changeStatus(id, status);
                 break;
             case 'work':
                 document.querySelector(`[data-id="${id}"]`).className = '';
                 document.querySelector(`[data-id="${id}"]`).classList.add('dataInfo', 'inWork');
-                this.changeStatus(id,status);
+                this.changeStatus(id, status);
                 break;
             case 'complite':
                 document.querySelector(`[data-id="${id}"]`).className = '';
                 document.querySelector(`[data-id="${id}"]`).classList.add('dataInfo', 'complite');
-                this.changeStatus(id,status);
+                this.changeStatus(id, status);
                 break;
             case 'refactor':
                 document.querySelector(`[data-id="${id}"]`).className = '';
                 document.querySelector(`[data-id="${id}"]`).classList.add('dataInfo', 'refactor');
-                this.changeStatus(id,status);
+                this.changeStatus(id, status);
                 break;
         }
     }
 
+    rewriteTask(e) {
+        e.preventDefault();
+
+        if (e.target.classList.contains('refac')) {
+
+            this._addItemBtn.disabled=true;
+            this._rewriteItemBtn.disabled=false;
+
+            let task = e.target.closest('.dataInfo');
+            let id = task.dataset.id * 1;
+            let temp = TodoList.getLogalStorage();
+            let todo = '';
+            temp.some(tasks => {
+                if (tasks.id * 1 === id) {
+                    return todo = tasks;
+                }
+            });
+
+            this.openModal();
+
+            this._name.value=todo.name;
+            this._date.value=todo.date;
+            this._descriptions.value=todo.descriptions;
+
+            let oldValue={
+                name: this._name.value,
+                date: this._date.value,
+                descriptions: this._descriptions.value,
+            };
+
+
+            this._rewriteItemBtn.addEventListener('click', e => {
+                e.preventDefault();
+                if(e.target.closest('.rewriteItemBtn')){
+                    let rewrite={
+                        id:id,
+                        name: this._name.value,
+                        date: this._date.value,
+                        descriptions: this._descriptions.value,
+                        status: 'pending',
+                        rewrite: true,
+                    };
+                    this._form.reset();
+                    this.closeModal();
+
+                    temp.splice(id, 1, rewrite);
+                    TodoList.toLocalStorage(temp);
+                    this.generate(temp);
+                }
+            });
+
+        }
+    }
+
+
     _setEvents() {
-        document.addEventListener("DOMContentLoaded",e=>this.defaultToDoLocalStorage(e));
-        document.body.addEventListener('keyup',e=>this.closeModal(e));
+        document.addEventListener("DOMContentLoaded", e => this.defaultToDoLocalStorage(e));
+        document.body.addEventListener('keyup', e => this.eventCloseModal(e));
 
-        this._form.addEventListener('submit', e => this.newTodo(e));
-        this._headerToDo.addEventListener('click',e => this.sortTodo(e));
-        this._openForm.addEventListener('click',e=>this.openModal(e));
-        this._exitBtn.addEventListener('click',e=>this.closeModal(e));
+        this._addItemBtn.addEventListener('click', e => this.newTodo(e));
 
-        this._dataTascksInfo.addEventListener('click',e=>this.status(e));
+
+        this._headerToDo.addEventListener('click', e => this.sortTodo(e));
+
+        this._openForm.addEventListener('click', e => this.eventOpenModal(e));
+        this._exitBtn.addEventListener('click', e => this.eventCloseModal(e));
+
+        this._dataTascksInfo.addEventListener('click', e => this.status(e));
+        this._dataTascksInfo.addEventListener('click',e=>this.rewriteTask(e));
     }
 
 
     static sorteg(todos, param = 'name', {asc = true}={}) {
         todos.sort((a, b) => {
-            return asc ?  (a[param].localeCompare(b[param])) : (b[param].localeCompare(a[param]))
+            return asc ? (a[param].localeCompare(b[param])) : (b[param].localeCompare(a[param]))
         });
         this.generate(todos);
     };
@@ -192,7 +261,7 @@ class TodoList {
         return JSON.parse(localStorage.getItem('todoList'));
     }
 
-     addTemplate(item) {
+    addTemplate(item) {
         const template = `
             <div class="dataInfo" data-id="${item.id}">
             <div class="name"><p>${item.name}</p></div>
@@ -206,15 +275,15 @@ class TodoList {
             </div>
         </div>
         `;
-         this._todoContainer.insertAdjacentHTML('beforeend', template);
+        this._todoContainer.insertAdjacentHTML('beforeend', template);
     }
 
-     generate(todos) {
-         this._todoContainer.innerHTML = '';
-       todos.forEach((item,id) => {
-                   this.addTemplate(item);
-                   this.contorlStatus(id,item.status);
-       });
+    generate(todos) {
+        this._todoContainer.innerHTML = '';
+        todos.forEach((item, id) => {
+            this.addTemplate(item);
+            this.contorlStatus(id, item.status);
+        });
     }
 
     static getDefaultSettings() {
@@ -224,8 +293,8 @@ class TodoList {
             formInfoName: 'name',
             formDate: 'date',
             formDescriptions: 'descriptions',
-            headerTodo:'.headerToDo',
-            openForm:'.newTodo',
+            headerTodo: '.headerToDo',
+            openForm: '.newTodo',
         }
     }
 
