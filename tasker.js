@@ -8,7 +8,7 @@ class TodoList {
 
     init() {
 
-        // this._todoContainer=document.querySelector(this._settings.todoContainer);
+        this._todoContainer=document.querySelector(this._settings.todoContainer);
 
         this._openForm=document.querySelector(this._settings.openForm);
 
@@ -22,11 +22,6 @@ class TodoList {
         this._overlay=document.querySelector('.overlay');
         this._modal=document.querySelector('.addModal');
         this._exitBtn = document.querySelector('.exitBtn');
-
-        this._pending=document.querySelector('.pen');
-        this._inwork=document.querySelector('.work');
-        this._complite=document.querySelector('.comp');
-        this._refactor=document.querySelector('.refac');
 
         this._dataTascksInfo=document.querySelector('.dataTascksInfo');
 
@@ -43,18 +38,16 @@ class TodoList {
 
     defaultToDoLocalStorage(e){
         let todos=localStorage.getItem('todoList') ? TodoList.getLogalStorage():TodoList.toLocalStorage([]);
-        TodoList.generate(todos);
+        this.generate(todos);
     }
 
     newTodo(e) {
 
         e.preventDefault();
-        !localStorage.getItem('todoList') ? TodoList.toLocalStorage([]) : '';
-
-        let temp = TodoList.getLogalStorage();
+        let temp =  !localStorage.getItem('todoList') ? TodoList.toLocalStorage([]) : TodoList.getLogalStorage();
 
         let todo = {
-            id: temp.length + 1,
+            id: temp.length,
             name: this._name.value,
             date: this._date.value,
             descriptions: this._descriptions.value,
@@ -69,7 +62,7 @@ class TodoList {
         temp.push(todo);
 
         TodoList.toLocalStorage(temp);
-        TodoList.generate(temp);
+        temp.length!==0?this.generate(temp):'';
 
     }
 
@@ -108,61 +101,27 @@ class TodoList {
     status(e) {
         e.preventDefault();
 
-        let stat = '';
+        let status = '';
 
         switch (true) {
             case e.target.classList.contains('pen'):
-                stat = 'pending';
+                status = 'pending';
                 break;
             case e.target.classList.contains('work'):
-                stat = 'work';
+                status = 'work';
                 break;
             case e.target.classList.contains('comp'):
-                stat = 'complite';
+                status = 'complite';
                 break;
             case e.target.classList.contains('refac'):
-                stat = 'refactor';
-                break;
-
-            default:
-                e.target.classList.contains('pen');
-                stat = 'pending';
+                status = 'refactor';
                 break;
         }
-
 
         let tasck = e.target.closest('.dataInfo');
         let id = tasck.dataset.id;
 
-
-        switch (stat) {
-            case 'pending':
-                document.querySelector(`[data-id="${id}"]`).className = '';
-                document.querySelector(`[data-id="${id}"]`).classList.add('dataInfo', 'pending');
-                this.changeStatus(id,stat);
-                break;
-            case 'work':
-                document.querySelector(`[data-id="${id}"]`).className = '';
-                document.querySelector(`[data-id="${id}"]`).classList.add('dataInfo', 'inWork');
-                this.changeStatus(id,stat);
-                break;
-            case 'complite':
-                document.querySelector(`[data-id="${id}"]`).className = '';
-                document.querySelector(`[data-id="${id}"]`).classList.add('dataInfo', 'complite');
-                this.changeStatus(id,stat);
-                break;
-            case 'refactor':
-                document.querySelector(`[data-id="${id}"]`).className = '';
-                document.querySelector(`[data-id="${id}"]`).classList.add('dataInfo', 'refactor');
-                this.changeStatus(id,stat);
-                break;
-
-            default:
-                document.querySelector(`[data-id="${id}"]`).className = '';
-                document.querySelector(`[data-id="${id}"]`).classList.add('dataInfo', 'pending');
-                this.changeStatus(id,stat);
-                break;
-        }
+        this.contorlStatus(id,status)
 
     }
 
@@ -174,11 +133,36 @@ class TodoList {
          if(temp[todo].id == id){
              temp[todo].status=status;
              break;
-         };
+         }
      }
      TodoList.toLocalStorage(temp);
 
      }
+
+    contorlStatus(id,status){
+        switch (status) {
+            case 'pending':
+                document.querySelector(`[data-id="${id}"]`).className = '';
+                document.querySelector(`[data-id="${id}"]`).classList.add('dataInfo', 'pending');
+                this.changeStatus(id,status);
+                break;
+            case 'work':
+                document.querySelector(`[data-id="${id}"]`).className = '';
+                document.querySelector(`[data-id="${id}"]`).classList.add('dataInfo', 'inWork');
+                this.changeStatus(id,status);
+                break;
+            case 'complite':
+                document.querySelector(`[data-id="${id}"]`).className = '';
+                document.querySelector(`[data-id="${id}"]`).classList.add('dataInfo', 'complite');
+                this.changeStatus(id,status);
+                break;
+            case 'refactor':
+                document.querySelector(`[data-id="${id}"]`).className = '';
+                document.querySelector(`[data-id="${id}"]`).classList.add('dataInfo', 'refactor');
+                this.changeStatus(id,status);
+                break;
+        }
+    }
 
     _setEvents() {
         document.addEventListener("DOMContentLoaded",e=>this.defaultToDoLocalStorage(e));
@@ -197,7 +181,7 @@ class TodoList {
         todos.sort((a, b) => {
             return asc ?  (a[param].localeCompare(b[param])) : (b[param].localeCompare(a[param]))
         });
-        TodoList.generate(todos);
+        this.generate(todos);
     };
 
     static toLocalStorage(todos) {
@@ -208,7 +192,7 @@ class TodoList {
         return JSON.parse(localStorage.getItem('todoList'));
     }
 
-    static addTemplate(item) {
+     addTemplate(item) {
         const template = `
             <div class="dataInfo" data-id="${item.id}">
             <div class="name"><p>${item.name}</p></div>
@@ -222,17 +206,20 @@ class TodoList {
             </div>
         </div>
         `;
-        document.querySelector('.dataTascksInfo').insertAdjacentHTML('beforeend', template);
+         this._todoContainer.insertAdjacentHTML('beforeend', template);
     }
 
-    static generate(todos) {
-        document.querySelector('.dataTascksInfo').innerHTML = '';
-       todos.length!==0?todos.forEach(item => TodoList.addTemplate(item)):'';
+     generate(todos) {
+         this._todoContainer.innerHTML = '';
+       todos.forEach((item,id) => {
+                   this.addTemplate(item);
+                   this.contorlStatus(id,item.status);
+       });
     }
 
     static getDefaultSettings() {
         return {
-            // todoContainer: '.dataTascksInfo',
+            todoContainer: '.dataTascksInfo',
             formName: 'addNewTodo',
             formInfoName: 'name',
             formDate: 'date',
