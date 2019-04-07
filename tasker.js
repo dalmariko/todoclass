@@ -58,6 +58,7 @@ class TodoList {
             name: this._name.value,
             date: this._date.value,
             descriptions: this._descriptions.value,
+            status:'pending',
             rewrite: false,
         };
         this._form.reset();
@@ -66,8 +67,8 @@ class TodoList {
         this._modal.classList.add('noActive');
 
         temp.push(todo);
-        TodoList.toLocalStorage(temp);
 
+        TodoList.toLocalStorage(temp);
         TodoList.generate(temp);
 
     }
@@ -104,61 +105,80 @@ class TodoList {
         }
     }
 
-    status(e){
+    status(e) {
         e.preventDefault();
 
-        let stat='';
+        let stat = '';
 
         switch (true) {
             case e.target.classList.contains('pen'):
-                stat='pen';
+                stat = 'pending';
                 break;
             case e.target.classList.contains('work'):
-                stat='work';
+                stat = 'work';
                 break;
             case e.target.classList.contains('comp'):
-                stat='comp';
+                stat = 'complite';
                 break;
             case e.target.classList.contains('refac'):
-                stat='refac';
+                stat = 'refactor';
                 break;
 
             default:
                 e.target.classList.contains('pen');
-                stat='pen';
+                stat = 'pending';
                 break;
         }
 
 
-            let tasck=e.target.closest('.dataInfo');
-            let id = tasck.dataset.id;
+        let tasck = e.target.closest('.dataInfo');
+        let id = tasck.dataset.id;
 
 
-            switch (stat) {
-            case 'pen':
-                    document.querySelector(`[data-id="${id}"]`).className='';
-                    document.querySelector(`[data-id="${id}"]`).classList.add('dataInfo','pending');
-                    break;
+        switch (stat) {
+            case 'pending':
+                document.querySelector(`[data-id="${id}"]`).className = '';
+                document.querySelector(`[data-id="${id}"]`).classList.add('dataInfo', 'pending');
+                this.changeStatus(id,stat);
+                break;
             case 'work':
-                document.querySelector(`[data-id="${id}"]`).className='';
-                    document.querySelector(`[data-id="${id}"]`).classList.add('dataInfo','inWork');
-                    break;
-            case 'comp':
-                document.querySelector(`[data-id="${id}"]`).className='';
-                    document.querySelector(`[data-id="${id}"]`).classList.add('dataInfo','complite');
-                    break;
-            case 'refac':
-                document.querySelector(`[data-id="${id}"]`).className='';
-                    document.querySelector(`[data-id="${id}"]`).classList.add('dataInfo','refactor');
-                    break;
+                document.querySelector(`[data-id="${id}"]`).className = '';
+                document.querySelector(`[data-id="${id}"]`).classList.add('dataInfo', 'inWork');
+                this.changeStatus(id,stat);
+                break;
+            case 'complite':
+                document.querySelector(`[data-id="${id}"]`).className = '';
+                document.querySelector(`[data-id="${id}"]`).classList.add('dataInfo', 'complite');
+                this.changeStatus(id,stat);
+                break;
+            case 'refactor':
+                document.querySelector(`[data-id="${id}"]`).className = '';
+                document.querySelector(`[data-id="${id}"]`).classList.add('dataInfo', 'refactor');
+                this.changeStatus(id,stat);
+                break;
 
-                default:
-                    document.querySelector(`[data-id="${id}"]`).className='';
-                    document.querySelector(`[data-id="${id}"]`).classList.add('dataInfo','pending');
-                    break;
-            }
+            default:
+                document.querySelector(`[data-id="${id}"]`).className = '';
+                document.querySelector(`[data-id="${id}"]`).classList.add('dataInfo', 'pending');
+                this.changeStatus(id,stat);
+                break;
+        }
 
     }
+
+    changeStatus(id,status){
+        !localStorage.getItem('todoList') ? TodoList.toLocalStorage([]) : '';
+        let temp = TodoList.getLogalStorage();
+
+     for(let todo=0;todo<temp.length;todo++){
+         if(temp[todo].id == id){
+             temp[todo].status=status;
+             break;
+         };
+     }
+     TodoList.toLocalStorage(temp);
+
+     }
 
     _setEvents() {
         document.addEventListener("DOMContentLoaded",e=>this.defaultToDoLocalStorage(e));
