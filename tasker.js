@@ -288,11 +288,14 @@ class TodoList {
 
     generate(todos) {
         this._todoContainer.innerHTML = '';
-        todos.forEach((item, id) => {
-            this.addTemplate(item);
-            this.contorlStatus(id, item.status);
-            this.rewriteCheck(item,id);
-        });
+        if(todos.length!==0) {
+            todos.forEach((item, id) => {
+                this.addTemplate(item);
+                this.contorlStatus(id, item.status);
+                this.rewriteCheck(item, id);
+            });
+        }
+        return;
     }
 
     static getDefaultSettings() {
@@ -311,3 +314,9 @@ class TodoList {
 
 
 new TodoList().init();
+//
+// document.querySelector('.newTaskLogo').addEventListener('load',function () {
+//     let doc = this.getSVGDocument();
+//     let lamp = doc.querySelector("#lamp");
+//     lamp.classList.add('lampAnimation');
+// });
