@@ -164,6 +164,7 @@ class TodoList {
             case 'complite':
                 document.querySelector(`[data-id="${id}"]`).className = '';
                 document.querySelector(`[data-id="${id}"]`).classList.add('dataInfo', 'complite');
+                document.querySelector(`[data-id="${id}"] .refac`).disabled=true;
                 this.changeStatus(id, status);
                 break;
             case 'refactor':
@@ -221,7 +222,6 @@ class TodoList {
         }
     }
 
-
     rewriteCheck(task,id){
         if(task.rewrite===true){
            document.querySelector(`#refactorLogo${id}`).addEventListener("load", function() {
@@ -229,11 +229,6 @@ class TodoList {
                 let svg = doc.querySelector("svg"); // suppose our image contains a <rect>
                 svg.setAttribute("fill", "#a30001");
             });
-        }
-    }
-    compliteStatusCheck(task,id){
-        if(task.status==='complite'){
-                    document.querySelector(`[data-id="${id}"] .refac`).disabled=true;
         }
     }
 
@@ -282,8 +277,9 @@ class TodoList {
 </button>
                 <button class="comp"><object type="image/svg+xml" data="images/compliteLogo.svg" class="compliteLogo"></object>
 </button>
-                <button class="refac"><object type="image/svg+xml" id="refactorLogo${item.id}" data="images/refactorLogo.svg" class="refactorLogo"></object>
-</button>
+                <button class="refac">
+                    <object type="image/svg+xml" id="refactorLogo${item.id}" data="images/refactorLogo.svg" class="refactorLogo"></object>
+                </button>
             </div>
         </div>
         `;
@@ -296,7 +292,6 @@ class TodoList {
             this.addTemplate(item);
             this.contorlStatus(id, item.status);
             this.rewriteCheck(item,id);
-            this.compliteStatusCheck(item,id);
         });
     }
 
