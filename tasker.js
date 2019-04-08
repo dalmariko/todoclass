@@ -225,10 +225,15 @@ class TodoList {
     rewriteCheck(task,id){
         if(task.rewrite===true){
            document.querySelector(`#refactorLogo${id}`).addEventListener("load", function() {
-                var doc = this.getSVGDocument();
-                var svg = doc.querySelector("svg"); // suppose our image contains a <rect>
+                let doc = this.getSVGDocument();
+                let svg = doc.querySelector("svg"); // suppose our image contains a <rect>
                 svg.setAttribute("fill", "#a30001");
             });
+        }
+    }
+    compliteStatusCheck(task,id){
+        if(task.status==='complite'){
+                    document.querySelector(`[data-id="${id}"] .refac`).disabled=true;
         }
     }
 
@@ -291,6 +296,7 @@ class TodoList {
             this.addTemplate(item);
             this.contorlStatus(id, item.status);
             this.rewriteCheck(item,id);
+            this.compliteStatusCheck(item,id);
         });
     }
 
