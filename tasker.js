@@ -211,7 +211,6 @@ class TodoList {
                         status: 'pending',
                         rewrite: true,
                     };
-                    this._form.reset();
                     this.closeModal();
                     temp.splice(id, 1, rewrite);
                     TodoList.toLocalStorage(temp);
