@@ -129,11 +129,14 @@ header {
     width: 10%;
 }
 
-.descr, .options {
-    width: 35%;
+.descr{
+    width: 50%;
+}
+.options{
+    width: 20%;
 }
 
-.headerToDo,
+  .headerToDo,
 .name,
 .date,
 .descr,
@@ -153,17 +156,48 @@ header {
 }
 
 
+
+.options button{
+    height: 50px;
+    width: 50px;
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+.options button:focus object{
+    padding: 2px;
+    outline: 1px dashed #17171D;
+}
+
+.options button:hover object {
+    transform: scale(1.1);
+}
+
+.options button::-moz-focus-inner {
+    border: 0;
+}
+.options button object {
+    outline: none;
+    transition: transform 0.3s linear;
+}
+
+
+.refactorLogo,.worckLogo,.pendingLogo,.compliteLogo {
+    width: 100%;
+    height: 100%;
+}
+
+
 .pending{
-background-color: #ff2238;
+background-color: #f73149;
 }
 .inWork{
-background-color: green;
+background-color: #ffed0c;
 }
 .complite{
-background-color: orange;
+background-color: #3baf1d;
 }
 .refactor{
-background-color: aqua;
+background-color: #cacac8;
 }
-
-

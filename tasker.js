@@ -17,9 +17,9 @@ class TodoList {
         this._date = this._form[this._settings.formDate];
         this._descriptions = this._form[this._settings.formDescriptions];
 
-        this._addItemBtn=document.querySelector('.addItemBtn');
-        this._rewriteItemBtn=document.querySelector('.rewriteItemBtn');
-        this._btns=document.querySelector('.buttons');
+        this._addItemBtn = document.querySelector('.addItemBtn');
+        this._rewriteItemBtn = document.querySelector('.rewriteItemBtn');
+        this._btns = document.querySelector('.buttons');
 
         this._headerToDo = document.querySelector(this._settings.headerTodo);
 
@@ -85,8 +85,8 @@ class TodoList {
         e.preventDefault();
 
         if (e.target.classList.contains('openModal')) {
-            this._addItemBtn.disabled=false;
-            this._rewriteItemBtn.disabled=true;
+            this._addItemBtn.disabled = false;
+            this._rewriteItemBtn.disabled = true;
             this.openModal();
         }
     }
@@ -98,12 +98,12 @@ class TodoList {
         }
     }
 
-    openModal(){
+    openModal() {
         this._overlay.classList.remove('noActive');
         this._modal.classList.remove('noActive');
     }
 
-    closeModal(){
+    closeModal() {
         this._overlay.classList.add('noActive');
         this._modal.classList.add('noActive');
     }
@@ -129,7 +129,7 @@ class TodoList {
         }
 
         let task = e.target.closest('.dataInfo');
-        let id = task.dataset.id*1;
+        let id = task.dataset.id * 1;
 
         this.contorlStatus(id, status)
 
@@ -140,7 +140,7 @@ class TodoList {
         let temp = TodoList.getLogalStorage();
 
         for (let todo = 0; todo < temp.length; todo++) {
-            if (temp[todo].id*1 === id) {
+            if (temp[todo].id * 1 === id) {
                 temp[todo].status = status;
                 break;
             }
@@ -179,46 +179,40 @@ class TodoList {
 
         if (e.target.classList.contains('refac')) {
 
-            this._addItemBtn.disabled=true;
-            this._rewriteItemBtn.disabled=false;
+            this._addItemBtn.disabled = true;
+            this._rewriteItemBtn.disabled = false;
 
             let task = e.target.closest('.dataInfo');
             let id = task.dataset.id * 1;
             let temp = TodoList.getLogalStorage();
-            let todo = '';
-            temp.some(tasks => {
-                if (tasks.id * 1 === id) {
-                    return todo = tasks;
+            let todo = {};
+            for (let task = 0; task < temp.length; task++) {
+                if (temp[task].id * 1 === id) {
+                    todo = temp[task];
+                    break;
                 }
-            });
+            }
 
             this.openModal();
 
-            this._name.value=todo.name;
-            this._date.value=todo.date;
-            this._descriptions.value=todo.descriptions;
-
-            let oldValue={
-                name: this._name.value,
-                date: this._date.value,
-                descriptions: this._descriptions.value,
-            };
+            this._name.value = todo.name;
+            this._date.value = todo.date;
+            this._descriptions.value = todo.descriptions;
 
 
             this._rewriteItemBtn.addEventListener('click', e => {
                 e.preventDefault();
-                if(e.target.closest('.rewriteItemBtn')){
-                    let rewrite={
-                        id:id,
-                        name: this._name.value,
-                        date: this._date.value,
-                        descriptions: this._descriptions.value,
+                if (e.target.closest('.rewriteItemBtn')) {
+                    let rewrite = {
+                        id: id,
+                        name: this._name.value ,
+                        date: this._date.value ,
+                        descriptions: this._descriptions.value ,
                         status: 'pending',
                         rewrite: true,
                     };
                     this._form.reset();
                     this.closeModal();
-
                     temp.splice(id, 1, rewrite);
                     TodoList.toLocalStorage(temp);
                     this.generate(temp);
@@ -228,6 +222,16 @@ class TodoList {
         }
     }
 
+
+    rewriteCheck(task,id){
+        if(task.rewrite===true){
+           document.querySelector(`#refactorLogo${id}`).addEventListener("load", function() {
+                var doc = this.getSVGDocument();
+                var svg = doc.querySelector("svg"); // suppose our image contains a <rect>
+                svg.setAttribute("fill", "#a30001");
+            });
+        }
+    }
 
     _setEvents() {
         document.addEventListener("DOMContentLoaded", e => this.defaultToDoLocalStorage(e));
@@ -242,7 +246,7 @@ class TodoList {
         this._exitBtn.addEventListener('click', e => this.eventCloseModal(e));
 
         this._dataTascksInfo.addEventListener('click', e => this.status(e));
-        this._dataTascksInfo.addEventListener('click',e=>this.rewriteTask(e));
+        this._dataTascksInfo.addEventListener('click', e => this.rewriteTask(e));
     }
 
 
@@ -268,10 +272,14 @@ class TodoList {
             <div class="date"><p>${item.date}</p></div>
             <div class="descr"><p>${item.descriptions}</p></div>
             <div class="options">
-                <button class="pen">Pending</button>
-                <button class="work">In Work</button>
-                <button class="comp">Complite</button>
-                <button class="refac">Refactor</button>
+                <button class="pen"><object type="image/svg+xml" data="images/pendingLogo.svg" class="pendingLogo"></object>
+</button>
+                <button class="work"><object type="image/svg+xml" data="images/worckLogo.svg" class="worckLogo"></object>
+</button>
+                <button class="comp"><object type="image/svg+xml" data="images/compliteLogo.svg" class="compliteLogo"></object>
+</button>
+                <button class="refac"><object type="image/svg+xml" id="refactorLogo${item.id}" data="images/refactorLogo.svg" class="refactorLogo"></object>
+</button>
             </div>
         </div>
         `;
@@ -283,6 +291,7 @@ class TodoList {
         todos.forEach((item, id) => {
             this.addTemplate(item);
             this.contorlStatus(id, item.status);
+            this.rewriteCheck(item,id);
         });
     }
 
