@@ -6,12 +6,12 @@ body {
     margin: 0;
 }
 
-.container {
+/*.container {
     min-width: 320px;
     max-width: 1200px;
     margin-left: auto;
     margin-right: auto
-}
+}*/
 
 .noActive {
     display: none;
@@ -56,13 +56,7 @@ body {
     z-index: 20;
 }
 
-header {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
-    align-items: center;
-    background-color: aqua;
-}
+
 
 .addModal {
     position: relative;
@@ -156,6 +150,42 @@ header {
 }
 
 
+.newTodo{
+    position: absolute;
+    bottom: 30px;
+    right: 30px;
+}
+
+.newTodo button{
+    height: 80px;
+    width: 80px;
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+.newTodo button:focus object{
+    padding: 2px;
+    outline: 1px dashed #17171D;
+}
+
+.newTodo button:focus object{
+    padding: 2px;
+    outline: 1px dashed #17171D;
+}
+
+.newTodo button:hover object {
+    transform: scale(1.1);
+}
+
+.newTodo button::-moz-focus-inner {
+    border: 0;
+}
+.newTodo button object {
+    outline: none;
+    transition: transform 0.3s linear;
+}
+
 
 .options button{
     height: 50px;
@@ -183,7 +213,7 @@ header {
 }
 
 
-.refactorLogo,.worckLogo,.pendingLogo,.compliteLogo {
+.refactorLogo,.worckLogo,.pendingLogo,.compliteLogo,.newTaskLogo {
     width: 100%;
     height: 100%;
 }
