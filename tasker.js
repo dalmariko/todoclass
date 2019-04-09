@@ -66,17 +66,16 @@ class TodoList {
 
     sortTodo(e) {
         e.preventDefault();
-
         let todos = TodoList.getLogalStorage();
 
         if (e.target.classList.contains('up')) {
             let param = e.target.closest('.name') ? 'name' : 'date';
-            TodoList.sorteg(todos, param, {asc: false});
+            this.sorteg(todos, param, {asc: false});
         }
 
         if (e.target.classList.contains('down')) {
             let param = e.target.closest('.name') ? 'name' : 'date';
-            TodoList.sorteg(todos, param);
+            this.sorteg(todos, param);
         }
     }
 
@@ -162,7 +161,7 @@ class TodoList {
             case 'complite':
                 document.querySelector(`[data-id="${id}"]`).className = '';
                 document.querySelector(`[data-id="${id}"]`).classList.add('dataInfo', 'complite');
-                document.querySelector(`[data-id="${id}"] .refac`).disabled=true;
+                document.querySelector(`[data-id="${id}"] .refac`).disabled = true;
                 this.changeStatus(id, status);
                 break;
             case 'refactor':
@@ -204,9 +203,9 @@ class TodoList {
                 if (e.target.closest('.rewriteItemBtn')) {
                     let rewrite = {
                         id: id,
-                        name: this._name.value ,
-                        date: this._date.value ,
-                        descriptions: this._descriptions.value ,
+                        name: this._name.value,
+                        date: this._date.value,
+                        descriptions: this._descriptions.value,
                         status: 'pending',
                         rewrite: true,
                     };
@@ -220,9 +219,9 @@ class TodoList {
         }
     }
 
-    rewriteCheck(task,id){
-        if(task.rewrite===true){
-            document.querySelector(`#refactorLogo${id}`).addEventListener("load", function() {
+    rewriteCheck(task, id) {
+        if (task.rewrite === true) {
+            document.querySelector(`#refactorLogo${id}`).addEventListener("load", function () {
                 let doc = this.getSVGDocument();
                 let svg = doc.querySelector("svg");
                 svg.setAttribute("fill", "#a30001");
@@ -247,7 +246,7 @@ class TodoList {
     }
 
 
-    static sorteg(todos, param = 'name', {asc = true}={}) {
+    sorteg(todos, param = 'name', {asc = true}={}) {
         todos.sort((a, b) => {
             return asc ? (a[param].localeCompare(b[param])) : (b[param].localeCompare(a[param]))
         });
@@ -286,11 +285,13 @@ class TodoList {
 
     generate(todos) {
         this._todoContainer.innerHTML = '';
-           todos?todos.forEach((item, id) => {
+        if (todos.length !== 0) {
+            todos.forEach((item, id) => {
                 this.addTemplate(item);
-                this.contorlStatus(id, item.status);
                 this.rewriteCheck(item, id);
-            }):'';
+                this.contorlStatus(item.id, item.status);
+            })
+        }
     }
 
     static getDefaultSettings() {
@@ -302,12 +303,12 @@ class TodoList {
             formDescriptions: 'descriptions',
             headerTodo: '.headerToDo',
             openForm: '.newTodo',
-            addItemBtn:'.addItemBtn',
-            rewriteItemBtn:'.rewriteItemBtn',
-            overlay:'.overlay',
-            addModal:'.addModal',
-            exitBtn:'.exitBtn',
-            tasksContainer:'.dataTascksInfo',
+            addItemBtn: '.addItemBtn',
+            rewriteItemBtn: '.rewriteItemBtn',
+            overlay: '.overlay',
+            addModal: '.addModal',
+            exitBtn: '.exitBtn',
+            tasksContainer: '.dataTascksInfo',
         }
     }
 

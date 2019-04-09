@@ -17,13 +17,6 @@ body {
     display: none;
 }
 
-
-
-
-
-
-
-
 .exitBtn {
     position: absolute;
     cursor: pointer;
@@ -62,8 +55,6 @@ body {
     transition: .3s all;
     z-index: 20;
 }
-
-
 
 .addModal {
     position: relative;
@@ -104,7 +95,7 @@ body {
     margin: 10px;
 }
 
-.buttons{
+.buttons {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -131,14 +122,13 @@ body {
     width: 100%;
 }
 
-.descr{
+.descr {
     width: 100%;
 }
 
-.options{
+.options {
     width: 100%;
 }
-
 
 .headerToDo,
 .name,
@@ -156,17 +146,15 @@ body {
 
 .name,
 .date,
-.options{
+.options {
     flex-direction: row;
 }
+
 .dataInfo {
     margin: 3px 0;
     border-top: solid 1px black;
     border-bottom: solid 1px black;
 }
-
-
-
 
 @media screen and (min-width: 480px) {
 
@@ -216,7 +204,7 @@ body {
         width: 30%;
     }
 
-    .buttons{
+    .buttons {
         display: flex;
         flex-direction: row;
         justify-content: space-around;
@@ -243,10 +231,11 @@ body {
         width: 10%;
     }
 
-    .descr{
+    .descr {
         width: 50%;
     }
-    .options{
+
+    .options {
         width: 20%;
     }
 
@@ -264,28 +253,14 @@ body {
     }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-.newTodo{
+.newTodo {
     position: fixed;
     bottom: 30px;
     right: 30px;
     z-index: 1000;
 }
 
-.newTodo button{
+.newTodo button {
     height: 80px;
     width: 80px;
     border: none;
@@ -293,12 +268,12 @@ body {
     cursor: pointer;
 }
 
-.newTodo button:focus object{
+.newTodo button:focus object {
     padding: 2px;
     outline: 1px dashed #17171D;
 }
 
-.newTodo button:focus object{
+.newTodo button:focus object {
     padding: 2px;
     outline: 1px dashed #17171D;
 }
@@ -316,8 +291,7 @@ body {
     transition: transform 0.3s linear;
 }
 
-
-.options button{
+.options button {
     height: 50px;
     width: 50px;
     border: none;
@@ -325,7 +299,7 @@ body {
     cursor: pointer;
 }
 
-.options button:focus object{
+.options button:focus object {
     padding: 2px;
     outline: 1px dashed #17171D;
 }
@@ -337,27 +311,29 @@ body {
 .options button::-moz-focus-inner {
     border: 0;
 }
+
 .options button object {
     outline: none;
     transition: transform 0.3s linear;
 }
 
-
-.refactorLogo,.worckLogo,.pendingLogo,.compliteLogo,.newTaskLogo {
+.refactorLogo, .worckLogo, .pendingLogo, .compliteLogo, .newTaskLogo {
     width: 100%;
     height: 100%;
 }
 
+.pending {
+    background-color: #f73149;
+}
 
-.pending{
-background-color: #f73149;
+.inWork {
+    background-color: #ffed0c;
 }
-.inWork{
-background-color: #ffed0c;
+
+.complite {
+    background-color: #3baf1d;
 }
-.complite{
-background-color: #3baf1d;
-}
-.refactor{
-background-color: #cacac8;
+
+.refactor {
+    background-color: #cacac8;
 }
