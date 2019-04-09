@@ -285,13 +285,11 @@ class TodoList {
 
     generate(todos) {
         this._todoContainer.innerHTML = '';
-        if (todos.length !== 0) {
-            todos.forEach((item, id) => {
+           todos?todos.forEach((item, id) => {
                 this.addTemplate(item);
                 this.rewriteCheck(item, id);
                 this.contorlStatus(item.id, item.status);
-            })
-        }
+            }):'';
     }
 
     static getDefaultSettings() {
