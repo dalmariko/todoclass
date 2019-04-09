@@ -3,11 +3,11 @@
 
         .lampAnimation {
         fill:#ffc843;
-        -webkit-animation: color-change 5s infinite alternate;
-        -moz-animation: color-change 5s infinite alternate;
-        -o-animation: color-change 5s infinite alternate;
-        -ms-animation: color-change 5s infinite alternate;
-        animation: color-change 5s infinite alternate;
+        -webkit-animation: color-change 5s ease-in-out infinite alternate;
+        -moz-animation: color-change 5s ease-in-out infinite alternate;
+        -o-animation: color-change 5s ease-in-out infinite alternate;
+        -ms-animation: color-change 5s ease-in-out infinite alternate;
+        animation: color-change 5s ease-in-out infinite alternate;
         }
 
         @-webkit-keyframes color-change {

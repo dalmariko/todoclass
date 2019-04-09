@@ -6,16 +6,18 @@ body {
     margin: 0;
 }
 
-/*.container {
-    min-width: 320px;
+.container {
+    min-width: 300px;
     max-width: 1200px;
     margin-left: auto;
     margin-right: auto
-}*/
+}
 
 .noActive {
     display: none;
 }
+
+
 
 
 
@@ -72,8 +74,8 @@ body {
     position: absolute;
     left: 50%;
     top: 50%;
-    transform: translate(-50%, 50%);
-    width: 50%;
+    transform: translate(-50%, 10%);
+    width: 80%;
     border: solid 1px black;
     padding: 20px;
     background-color: #ffffff;
@@ -98,12 +100,13 @@ body {
 }
 
 .form-group button {
-    width: 30%;
+    width: 80%;
+    margin: 10px;
 }
 
 .buttons{
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: space-around;
     align-items: center;
 }
@@ -125,29 +128,37 @@ body {
 }
 
 .name, .date {
-    width: 10%;
+    width: 100%;
 }
 
 .descr{
-    width: 50%;
-}
-.options{
-    width: 20%;
+    width: 100%;
 }
 
-  .headerToDo,
+.options{
+    width: 100%;
+}
+
+
+.headerToDo,
 .name,
 .date,
 .descr,
 .options,
 .dataInfo {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: space-around;
     align-items: center;
     word-break: break-all;
+    font-size: 1rem;
 }
 
+.name,
+.date,
+.options{
+    flex-direction: row;
+}
 .dataInfo {
     margin: 3px 0;
     border-top: solid 1px black;
@@ -155,10 +166,123 @@ body {
 }
 
 
+
+
+@media screen and (min-width: 480px) {
+
+}
+
+@media screen and (min-width: 768px) {
+
+}
+
+@media screen and (min-width: 1024px) {
+
+    .addModal {
+        position: relative;
+        z-index: 100;
+    }
+
+    .addTascks {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, 50%);
+        width: 50%;
+        border: solid 1px black;
+        padding: 20px;
+        background-color: #ffffff;
+    }
+
+    .dataForm {
+        height: auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+    }
+
+    .form-group {
+        display: flex;
+        padding: 10px 0;
+        flex-direction: column;
+        justify-content: space-around;
+    }
+
+    .form-group label {
+        padding: 5px 0;
+    }
+
+    .form-group button {
+        width: 30%;
+    }
+
+    .buttons{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+    }
+
+    .up {
+        width: 5px;
+        height: 5px;
+        border-left: 5px solid transparent;
+        border-right: 5px solid transparent;
+        border-bottom: 10px solid red;
+    }
+
+    .down {
+        width: 5px;
+        height: 5px;
+        border-left: 5px solid transparent;
+        border-right: 5px solid transparent;
+        border-top: 10px solid red;
+    }
+
+    .name, .date {
+        width: 10%;
+    }
+
+    .descr{
+        width: 50%;
+    }
+    .options{
+        width: 20%;
+    }
+
+    .headerToDo,
+    .name,
+    .date,
+    .descr,
+    .options,
+    .dataInfo {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        word-break: break-all;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 .newTodo{
-    position: absolute;
+    position: fixed;
     bottom: 30px;
     right: 30px;
+    z-index: 1000;
 }
 
 .newTodo button{
@@ -186,6 +310,7 @@ body {
 .newTodo button::-moz-focus-inner {
     border: 0;
 }
+
 .newTodo button object {
     outline: none;
     transition: transform 0.3s linear;
