@@ -260,7 +260,8 @@ body {
     z-index: 1000;
 }
 
-.newTodo button {
+.newTodo div {
+    display: block;
     height: 80px;
     width: 80px;
     border: none;
@@ -268,28 +269,33 @@ body {
     cursor: pointer;
 }
 
-.newTodo button:focus object {
+.newTodo div:focus img {
     padding: 2px;
     outline: 1px dashed #17171D;
 }
 
-.newTodo button:focus object {
+.newTodo div:focus img {
     padding: 2px;
     outline: 1px dashed #17171D;
 }
 
-.newTodo button:hover object {
+.newTodo div:hover img {
     transform: scale(1.1);
 }
 
-.newTodo button::-moz-focus-inner {
+.newTodo div::-moz-focus-inner {
     border: 0;
 }
 
-.newTodo button object {
+.newTodo div img {
     outline: none;
     transition: transform 0.3s linear;
 }
+
+
+
+
+
 
 .options button {
     height: 50px;
