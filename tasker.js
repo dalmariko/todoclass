@@ -286,14 +286,11 @@ class TodoList {
 
     generate(todos) {
         this._todoContainer.innerHTML = '';
-        if(todos.length!==0) {
-            todos.forEach((item, id) => {
+           todos?todos.forEach((item, id) => {
                 this.addTemplate(item);
                 this.contorlStatus(id, item.status);
                 this.rewriteCheck(item, id);
-            });
-        }
-        return;
+            }):'';
     }
 
     static getDefaultSettings() {
