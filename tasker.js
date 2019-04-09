@@ -81,7 +81,7 @@ class TodoList {
 
     eventOpenModal(e) {
         e.preventDefault();
-        if (e.target.classList.contains('openModal')) {
+        if (e.target.closest('.openModal')) {
             this._addItemBtn.disabled = false;
             this._rewriteItemBtn.disabled = true;
             this.openModal();
