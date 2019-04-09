@@ -17,17 +17,16 @@ class TodoList {
         this._date = this._form[this._settings.formDate];
         this._descriptions = this._form[this._settings.formDescriptions];
 
-        this._addItemBtn = document.querySelector('.addItemBtn');
-        this._rewriteItemBtn = document.querySelector('.rewriteItemBtn');
-        this._btns = document.querySelector('.buttons');
+        this._addItemBtn = document.querySelector(this._settings.addItemBtn);
+        this._rewriteItemBtn = document.querySelector(this._settings.rewriteItemBtn);
 
         this._headerToDo = document.querySelector(this._settings.headerTodo);
 
-        this._overlay = document.querySelector('.overlay');
-        this._modal = document.querySelector('.addModal');
-        this._exitBtn = document.querySelector('.exitBtn');
+        this._overlay = document.querySelector(this._settings.overlay);
+        this._modal = document.querySelector(this._settings.addModal);
+        this._exitBtn = document.querySelector(this._settings.exitBtn);
 
-        this._dataTascksInfo = document.querySelector('.dataTascksInfo');
+        this._dataTascksInfo = document.querySelector(this._settings.tasksContainer);
 
         this._setEvents();
 
@@ -83,7 +82,6 @@ class TodoList {
 
     eventOpenModal(e) {
         e.preventDefault();
-
         if (e.target.classList.contains('openModal')) {
             this._addItemBtn.disabled = false;
             this._rewriteItemBtn.disabled = true;
@@ -224,9 +222,9 @@ class TodoList {
 
     rewriteCheck(task,id){
         if(task.rewrite===true){
-           document.querySelector(`#refactorLogo${id}`).addEventListener("load", function() {
+            document.querySelector(`#refactorLogo${id}`).addEventListener("load", function() {
                 let doc = this.getSVGDocument();
-                let svg = doc.querySelector("svg"); // suppose our image contains a <rect>
+                let svg = doc.querySelector("svg");
                 svg.setAttribute("fill", "#a30001");
             });
         }
@@ -307,6 +305,12 @@ class TodoList {
             formDescriptions: 'descriptions',
             headerTodo: '.headerToDo',
             openForm: '.newTodo',
+            addItemBtn:'.addItemBtn',
+            rewriteItemBtn:'.rewriteItemBtn',
+            overlay:'.overlay',
+            addModal:'.addModal',
+            exitBtn:'.exitBtn',
+            tasksContainer:'.dataTascksInfo',
         }
     }
 
@@ -314,9 +318,4 @@ class TodoList {
 
 
 new TodoList().init();
-//
-// document.querySelector('.newTaskLogo').addEventListener('load',function () {
-//     let doc = this.getSVGDocument();
-//     let lamp = doc.querySelector("#lamp");
-//     lamp.classList.add('lampAnimation');
-// });
+
