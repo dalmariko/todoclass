@@ -294,7 +294,9 @@ body {
 
 
 
-
+object{
+    pointer-events: none;
+}
 
 
 .options button {
