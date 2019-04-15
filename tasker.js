@@ -221,7 +221,7 @@ class TodoList {
 
     rewriteCheck(task, id) {
         if (task.rewrite === true) {
-            let el  = document.querySelector(`#refactorLogo${id}`).addEventListener("load", function () {
+             document.querySelector(`#refactorLogo${id}`).addEventListener("load", function () {
                 let doc = this.getSVGDocument();
                 let svg = doc.querySelector("svg");
                 svg.setAttribute("fill", "#a30001");
